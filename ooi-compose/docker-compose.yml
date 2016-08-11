@@ -1,0 +1,51 @@
+version: '2'
+services:
+  cassandra:
+    image: cassandra:2.1
+    hostname: cassandra
+    ports:
+      - "9042:9042"
+      - "9160:9160"
+    volumes:
+      - ./cassandra_data:/var/lib/cassandra
+
+  qpid:
+    image: ooi-qpid:0.18
+    hostname: qpid
+    ports:
+      - "5672:5672"
+
+  postgres:
+    image: ooi-postgres:9.2
+    hostname: postgres
+    ports:
+      - "5432:5432"
+
+  uframe:
+    image: ooi-uframe:0.01
+    hostname: uframe
+    depends_on:
+      - cassandra
+      - qpid
+      - postgres
+    ports:
+      - "12570-12600:12570-12600"
+    volumes:
+      - ./ooi:/edex/data/ooi
+      - ./async:/opt/ooi/async
+    environment:
+      - EDEX_RUN_MODE=ooi
+
+  stream_engine:
+    image: ooi-stream-engine:0.01
+    hostname: stream_engine
+    depends_on:
+      - cassandra
+    volumes:
+      - ./async:/opt/ooi/async
+
+  ingest_engine:
+    image: ooi-ingest-engine:0.01
+    hostname: ingest_engine
+    volumes:
+      - ./ingest_data:/data
