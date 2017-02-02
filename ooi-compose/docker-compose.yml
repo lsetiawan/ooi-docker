@@ -14,12 +14,19 @@ services:
     hostname: qpid
     ports:
       - "5672:5672"
+      - "8080:8080"
 
   postgres:
     image: ooi-postgres:9.2
     hostname: postgres
     ports:
       - "5432:5432"
+
+  redis:
+    image: redis
+    hostname: redis
+    ports:
+      - "6379:6379"
 
   uframe:
     image: ooi-uframe:0.01
@@ -35,6 +42,29 @@ services:
       - ./async:/opt/ooi/async
     environment:
       - EDEX_RUN_MODE=ooi
+      - CASSANDRA_CONTACTPOINTS=cassandra
+      - CASSANDRA_PORT=9042
+      - CASSANDRA_KEYSPACE=ooi
+
+#  uframe-cabled:
+#    image: ooi-uframe:0.01
+#    hostname: uframe-cabled
+#    depends_on:
+#      - cassandra
+#      - qpid
+#      - postgres
+#    environment:
+#      - EDEX_RUN_MODE=cabled_ingest
+
+#  uframe-uncabled:
+#    image: ooi-uframe:0.01
+#    hostname: uframe-uncabled
+#    depends_on:
+#      - cassandra
+#      - qpid
+#      - postgres
+#    environment:
+#      - EDEX_RUN_MODE=uncabled_ingest
 
   stream_engine:
     image: ooi-stream-engine:0.01
