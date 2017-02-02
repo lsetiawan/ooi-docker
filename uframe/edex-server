@@ -4,7 +4,7 @@ script_dir=/ooi/bin
 
 # Environment
 
-export UFRAME_HOME=/
+export UFRAME_HOME=$(pwd)
 export AWIPS_HOME=$UFRAME_HOME
 export CONSOLE_LOGLEVEL=INFO
 export EDEX_HOME=$UFRAME_HOME/edex
@@ -13,6 +13,7 @@ export ALLOW_ARCHIVE_DATA=false
 export AMQP_SPEC=$UFRAME_HOME/python/share/amqp/amqp.0-10.xml
 export SKIP_RPM_CHECK=1
 export JAVA_INSTALL=$JAVA_HOME
+export PYPIES_MAX_CONN=0
 
 export EDEX_RUN_MODE=${EDEX_RUN_MODE:=ooi}
 
