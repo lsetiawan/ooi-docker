@@ -1,13 +1,13 @@
 version: '2'
 services:
   cassandra:
-    image: cassandra:2.1
+    image: cassandra:2
     hostname: cassandra
     ports:
       - "9042:9042"
       - "9160:9160"
     volumes:
-      - ./cassandra_data:/var/lib/cassandra
+      - ./volumes/cassandra_data:/var/lib/cassandra
 
   qpid:
     image: ooi-qpid:0.18
@@ -38,8 +38,8 @@ services:
     ports:
       - "12570-12600:12570-12600"
     volumes:
-      - ./ooi:/edex/data/ooi
-      - ./async:/opt/ooi/async
+      - ./volumes/ooi:/edex/data/ooi
+      - ./volumes/async:/opt/ooi/async
     environment:
       - EDEX_RUN_MODE=ooi
       - CASSANDRA_CONTACTPOINTS=cassandra
@@ -72,10 +72,10 @@ services:
     depends_on:
       - cassandra
     volumes:
-      - ./async:/opt/ooi/async
+      - ./volumes/async:/opt/ooi/async
 
   ingest_engine:
     image: ooi-ingest-engine:0.01
     hostname: ingest_engine
     volumes:
-      - ./ingest_data:/data
+      - ./volumes/ingest_data:/data
