@@ -1,12 +1,17 @@
 FROM continuumio/anaconda:latest
 
 RUN conda update --yes conda \
-    && conda install --yes python=2.7.10 matplotlib mock flask sqlalchemy futures gunicorn ipython msgpack-python nose \
+    && conda install --yes python=2.7 matplotlib mock flask sqlalchemy futures gunicorn ipython msgpack-python nose \
     && conda install --yes -c ooi concurrentloghandler ntplib
 RUN pip install simplejson
 RUN git clone https://github.com/oceanobservatories/mi-dataset && pip install ./mi-dataset && rm -rf mi-dataset
 
-COPY ingest_engine/ /ingest_engine
+# Temp ingest engine grab from conda
+RUN conda create -n tmp-ingest -c ooi --yes python=2.7 ingest_engine
+# COPY ingest_engine/ /ingest_engine
+RUN cp -R /opt/conda/envs/tmp-ingest/ingest_engine /ingest_engine
+RUN conda env remove -n tmp-ingest
+
 COPY configure.sh /configure.sh
 RUN bash /configure.sh && mkdir /data
 
