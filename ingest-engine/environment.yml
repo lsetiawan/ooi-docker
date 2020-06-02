@@ -1,0 +1,45 @@
+name: ingest
+channels:
+- defaults
+- conda-forge
+- ooi
+dependencies:
+- python=2
+- numpy
+- scipy
+- pandas
+- obspy
+- gevent
+- matplotlib
+- msgpack-python
+- nose
+- psycopg2
+- pyzmq
+- sqlalchemy
+- twisted
+- amqp
+- librabbitmq
+- ooi_port_agent
+- mock
+- requests
+- xarray
+- apscheduler=2.1.0
+- beautifulsoup4
+- coverage
+- kombu
+- ntplib
+- python-consul
+- qpid-python
+- tqdm
+- vine
+- flask
+- futures 
+- gunicorn
+- simplejson
+- pip
+- concurrentloghandler
+- psutil
+- pip:
+  - modestimage==0.1
+  - Deprecated==1.2.0
+  - git+https://github.com/oceanobservatories/mi-instrument.git
