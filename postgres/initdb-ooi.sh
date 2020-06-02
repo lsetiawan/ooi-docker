@@ -15,3 +15,6 @@ GRANT ALL PRIVILEGES ON DATABASE metadata TO awips;
 CREATE SCHEMA awips AUTHORIZATION awips;
 CREATE SCHEMA events AUTHORIZATION awips; 
 EOSQL
+
+source activate preload && python /init_schema.py && python /opt/preload-database/load_preload.py postgresql://awips:awips@localhost/metadata
+
